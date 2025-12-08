@@ -3,12 +3,21 @@ import { useNavigate } from 'react-router-dom';
 
 import { resetPasswordApi } from '@api';
 import { ResetPasswordUI } from '@ui-pages';
+import { getCookie } from '../../utils/cookie';
 
 export const ResetPassword: FC = () => {
   const navigate = useNavigate();
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');
   const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    const accessToken = getCookie('accessToken');
+    const refreshToken = localStorage.getItem('refreshToken');
+    if (accessToken && refreshToken) {
+      navigate('/', { replace: true });
+    }
+  }, [navigate]);
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();

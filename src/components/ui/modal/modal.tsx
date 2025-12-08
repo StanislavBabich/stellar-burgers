@@ -1,4 +1,5 @@
 import { FC, memo } from 'react';
+import clsx from 'clsx';
 
 import styles from './modal.module.css';
 
@@ -7,16 +8,25 @@ import { TModalUIProps } from './type';
 import { ModalOverlayUI } from '@ui';
 
 export const ModalUI: FC<TModalUIProps> = memo(
-  ({ title, onClose, children }) => (
+  ({ title, onClose, children, hideCloseButton = false }) => (
     <>
       <div className={styles.modal}>
         <div className={styles.header}>
-          <h3 className={`${styles.title} text text_type_main-large`}>
+          <h3
+            className={clsx(
+              styles.title,
+              'text',
+              'text_type_main-large',
+              hideCloseButton && styles.title_centered
+            )}
+          >
             {title}
           </h3>
-          <button className={styles.button} type='button'>
-            <CloseIcon type='primary' onClick={onClose} />
-          </button>
+          {!hideCloseButton && (
+            <button className={styles.button} type='button'>
+              <CloseIcon type='primary' onClick={onClose} />
+            </button>
+          )}
         </div>
         <div className={styles.content}>{children}</div>
       </div>

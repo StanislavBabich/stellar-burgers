@@ -1,5 +1,6 @@
 import { FeedInfoUI } from '@ui';
 import type { Meta, StoryObj } from '@storybook/react';
+import { TOrdersData } from '@utils-types';
 
 const meta = {
   title: 'Example/FeedInfo',
@@ -30,10 +31,8 @@ export const DefaultFeedInfo: Story = {
         }
       ],
       total: 12,
-      totalToday: 2,
-      isLoading: false,
-      error: null
-    },
+      totalToday: 2
+    } as TOrdersData,
     readyOrders: [123, 124, 125],
     pendingOrders: [126, 127]
   }

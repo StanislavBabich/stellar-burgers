@@ -11,4 +11,11 @@ export type ProfileUIProps = {
   handleCancel: (e: SyntheticEvent) => void;
   handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
   updateUserError?: string;
+  editingFields: {
+    name: boolean;
+    email: boolean;
+    password: boolean;
+  };
+  handleIconClick: (field: 'name' | 'email' | 'password') => void;
+  userPassword: string;
 };

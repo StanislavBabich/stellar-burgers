@@ -18,7 +18,17 @@
 .header {
   display: flex;
   align-items: center;
+  justify-content: center;
   min-height: 64px;
+  position: relative;
+}
+
+.title {
+  text-align: center;
+}
+
+.title_centered {
+  width: 100%;
 }
 
 .button {

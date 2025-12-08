@@ -5,3 +5,17 @@
 .form {
   max-width: 480px;
 }
+
+.inputWrapper {
+  position: relative;
+}
+
+.inputWrapper :global(input[readonly]) {
+  background-color: transparent;
+  cursor: default;
+  color: #8585ad;
+}
+
+.inputWrapper :global(input:not([readonly])) {
+  color: var(--text-primary-color);
+}

@@ -1,23 +1,46 @@
-import { FC, useMemo } from 'react';
+import { FC, useMemo, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
-import { TIngredient } from '@utils-types';
+import { TIngredient, TOrder } from '@utils-types';
+import { useSelector, useDispatch } from '../../services/store';
+import { selectIngredients, selectIngredientsHasLoaded } from '@selectors';
+import { getOrderByNumberApi } from '@api';
+import { fetchIngredients } from '@slices';
 
 export const OrderInfo: FC = () => {
-  /** TODO: взять переменные orderData и ingredients из стора */
-  const orderData = {
-    createdAt: '',
-    ingredients: [],
-    _id: '',
-    status: '',
-    name: '',
-    updatedAt: 'string',
-    number: 0
-  };
+  const { number } = useParams<{ number: string }>();
+  const dispatch = useDispatch();
+  const ingredients = useSelector(selectIngredients);
+  const hasLoaded = useSelector(selectIngredientsHasLoaded);
+  const [orderData, setOrderData] = useState<TOrder | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const ingredients: TIngredient[] = [];
+  useEffect(() => {
+    if (!hasLoaded) {
+      dispatch(fetchIngredients());
+    }
+  }, [dispatch, hasLoaded]);
 
-  /* Готовим данные для отображения */
+  useEffect(() => {
+    if (number) {
+      const orderNumber = parseInt(number, 10);
+      if (!isNaN(orderNumber)) {
+        setIsLoading(true);
+        getOrderByNumberApi(orderNumber)
+          .then((data) => {
+            if (data.success && data.orders && data.orders.length > 0) {
+              setOrderData(data.orders[0]);
+            }
+          })
+          .catch(() => {})
+          .finally(() => {
+            setIsLoading(false);
+          });
+      }
+    }
+  }, [number]);
+
   const orderInfo = useMemo(() => {
     if (!orderData || !ingredients.length) return null;
 
@@ -59,7 +82,7 @@ export const OrderInfo: FC = () => {
     };
   }, [orderData, ingredients]);
 
-  if (!orderInfo) {
+  if (isLoading || !orderInfo) {
     return <Preloader />;
   }
 
