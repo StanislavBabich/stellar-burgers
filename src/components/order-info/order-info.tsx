@@ -3,24 +3,15 @@ import { useParams } from 'react-router-dom';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient, TOrder } from '@utils-types';
-import { useSelector, useDispatch } from '../../services/store';
-import { selectIngredients, selectIngredientsHasLoaded } from '@selectors';
+import { useSelector } from '../../services/store';
+import { selectIngredients } from '@selectors';
 import { getOrderByNumberApi } from '@api';
-import { fetchIngredients } from '@slices';
 
 export const OrderInfo: FC = () => {
   const { number } = useParams<{ number: string }>();
-  const dispatch = useDispatch();
   const ingredients = useSelector(selectIngredients);
-  const hasLoaded = useSelector(selectIngredientsHasLoaded);
   const [orderData, setOrderData] = useState<TOrder | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    if (!hasLoaded) {
-      dispatch(fetchIngredients());
-    }
-  }, [dispatch, hasLoaded]);
 
   useEffect(() => {
     if (number) {

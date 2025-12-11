@@ -8,9 +8,10 @@ import { TModalUIProps } from './type';
 import { ModalOverlayUI } from '@ui';
 
 export const ModalUI: FC<TModalUIProps> = memo(
-  ({ title, onClose, children, hideCloseButton = false }) => (
+  ({ title, onClose, children, hideCloseButton = false, className }) => (
     <>
-      <div className={styles.modal}>
+      <ModalOverlayUI onClick={onClose} />
+      <div className={clsx(styles.modal, className)}>
         <div className={styles.header}>
           <h3
             className={clsx(
@@ -30,7 +31,6 @@ export const ModalUI: FC<TModalUIProps> = memo(
         </div>
         <div className={styles.content}>{children}</div>
       </div>
-      <ModalOverlayUI onClick={onClose} />
     </>
   )
 );

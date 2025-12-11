@@ -127,8 +127,26 @@ export const Profile: FC = () => {
     }));
   };
 
+  const isFieldChanged = (field: 'name' | 'email' | 'password'): boolean => {
+    if (field === 'password') {
+      return !!(formValue.password && formValue.password.trim() !== '');
+    }
+    return formValue[field] !== originalValues[field];
+  };
+
+  const handleInputFocus = (field: 'name' | 'email' | 'password') => {
+    setEditingFields({
+      name: field === 'name',
+      email: field === 'email',
+      password: field === 'password'
+    });
+    if (field === 'password') {
+      setFormValue((prev) => ({ ...prev, password: '' }));
+    }
+  };
+
   const handleIconClick = (field: 'name' | 'email' | 'password') => {
-    if (editingFields[field]) {
+    if (editingFields[field] && isFieldChanged(field)) {
       if (field === 'password') {
         setFormValue((prev) => ({ ...prev, password: '' }));
       } else {
@@ -137,12 +155,16 @@ export const Profile: FC = () => {
           [field]: originalValues[field]
         }));
       }
-      setEditingFields((prev) => ({ ...prev, [field]: false }));
-    } else {
-      setEditingFields((prev) => ({ ...prev, [field]: true }));
-      if (field === 'password') {
-        setFormValue((prev) => ({ ...prev, password: '' }));
-      }
+    }
+  };
+
+  const handleInputBlur = (field: 'name' | 'email' | 'password') => {
+    if (editingFields[field]) {
+      setEditingFields({
+        name: false,
+        email: false,
+        password: false
+      });
     }
   };
 
@@ -160,6 +182,9 @@ export const Profile: FC = () => {
       updateUserError={updateUserError}
       editingFields={editingFields}
       handleIconClick={handleIconClick}
+      handleInputFocus={handleInputFocus}
+      handleInputBlur={handleInputBlur}
+      isFieldChanged={isFieldChanged}
       userPassword={userPassword}
     />
   );

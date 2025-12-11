@@ -5,4 +5,5 @@ export type TModalUIProps = {
   onClose: () => void;
   children?: ReactNode;
   hideCloseButton?: boolean;
+  className?: string;
 };

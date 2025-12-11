@@ -16,52 +16,45 @@ const constructorSlice = createSlice({
   name: 'constructor',
   initialState,
   reducers: {
-    addIngredient: (state, action: PayloadAction<TIngredient>) => {
-      const ingredient = action.payload;
-
-      if (ingredient.type === 'bun') {
-        state.bun = {
-          ...ingredient,
-          id: uuidv4()
-        };
-      } else {
-        if (!state.ingredients || !Array.isArray(state.ingredients)) {
-          state.ingredients = [];
+    addIngredient: {
+      reducer: (
+        state,
+        action: PayloadAction<TConstructorIngredient & TIngredient>
+      ) => {
+        const ingredient = action.payload;
+        if (ingredient.type === 'bun') {
+          state.bun = ingredient;
+        } else {
+          state.ingredients.push(ingredient);
         }
-        state.ingredients.push({
+      },
+      prepare: (ingredient: TIngredient) => ({
+        payload: {
           ...ingredient,
           id: uuidv4()
-        });
-      }
+        }
+      })
     },
     removeIngredient: (state, action: PayloadAction<string>) => {
-      if (!Array.isArray(state.ingredients)) {
-        state.ingredients = [];
-      } else {
-        state.ingredients = state.ingredients.filter(
-          (item) => item.id !== action.payload
-        );
-      }
+      state.ingredients = state.ingredients.filter(
+        (item) => item.id !== action.payload
+      );
     },
     moveIngredient: (
       state,
       action: PayloadAction<{ fromIndex: number; toIndex: number }>
     ) => {
-      if (!Array.isArray(state.ingredients)) {
-        state.ingredients = [];
-      } else {
-        const { fromIndex, toIndex } = action.payload;
-        if (
-          fromIndex >= 0 &&
-          fromIndex < state.ingredients.length &&
-          toIndex >= 0 &&
-          toIndex < state.ingredients.length &&
-          fromIndex !== toIndex
-        ) {
-          const item = state.ingredients[fromIndex];
-          state.ingredients.splice(fromIndex, 1);
-          state.ingredients.splice(toIndex, 0, item);
-        }
+      const { fromIndex, toIndex } = action.payload;
+      if (
+        fromIndex >= 0 &&
+        fromIndex < state.ingredients.length &&
+        toIndex >= 0 &&
+        toIndex < state.ingredients.length &&
+        fromIndex !== toIndex
+      ) {
+        const item = state.ingredients[fromIndex];
+        state.ingredients.splice(fromIndex, 1);
+        state.ingredients.splice(toIndex, 0, item);
       }
     },
     clearConstructor: (state) => {

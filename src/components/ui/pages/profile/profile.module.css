@@ -12,10 +12,19 @@
 
 .inputWrapper :global(input[readonly]) {
   background-color: transparent;
-  cursor: default;
+  cursor: text;
   color: #8585ad;
 }
 
 .inputWrapper :global(input:not([readonly])) {
   color: var(--text-primary-color);
+}
+
+.inputWrapper :global(svg) {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.inputWrapper :global(button) {
+  cursor: pointer;
 }

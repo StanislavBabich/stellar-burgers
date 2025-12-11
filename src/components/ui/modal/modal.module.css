@@ -3,7 +3,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 9999;
+  z-index: 3;
   margin: auto;
   padding: 40px 40px 60px;
   background-color: #1c1c21;
@@ -18,13 +18,21 @@
 .header {
   display: flex;
   align-items: center;
-  justify-content: center;
   min-height: 64px;
   position: relative;
+  padding: 0 24px;
 }
 
 .title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   text-align: center;
+  max-width: calc(100% - 80px);
+  padding: 0 40px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .title_centered {
@@ -35,11 +43,12 @@
   display: flex;
   width: 24px;
   height: 24px;
+  position: absolute;
+  right: 24px;
   outline: none;
   border: none;
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0);
-  margin-left: auto;
   padding: 0;
 }
 

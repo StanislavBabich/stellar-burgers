@@ -17,6 +17,9 @@ export const ProfileUI: FC<ProfileUIProps> = ({
   handleInputChange,
   editingFields,
   handleIconClick,
+  handleInputFocus,
+  handleInputBlur,
+  isFieldChanged,
   userPassword
 }) => {
   const getPasswordDisplayValue = () => {
@@ -24,6 +27,67 @@ export const ProfileUI: FC<ProfileUIProps> = ({
       return formValue.password;
     }
     return userPassword;
+  };
+
+  const getIcon = (field: 'name' | 'email' | 'password') => {
+    if (editingFields[field] && isFieldChanged(field)) {
+      return 'CloseIcon';
+    }
+    return 'EditIcon';
+  };
+
+  const handleWrapperMouseDown = (
+    e: React.MouseEvent<HTMLDivElement>,
+    field: 'name' | 'email' | 'password'
+  ) => {
+    const target = e.target as HTMLElement;
+    const wrapper = e.currentTarget;
+    const input = wrapper.querySelector('input') as HTMLInputElement;
+
+    if (!input) return;
+
+    const isInputClick = target === input || input.contains(target);
+    const isSvgClick = target.closest('svg') !== null;
+    const isButtonClick = target.closest('button') !== null;
+    const isIconAreaClick = !isInputClick && (isSvgClick || isButtonClick);
+
+    const inputRect = input.getBoundingClientRect();
+    const clickX = e.clientX;
+    const isClickInRightArea = clickX > inputRect.right - 50;
+
+    if (
+      (isIconAreaClick || isClickInRightArea) &&
+      editingFields[field] &&
+      isFieldChanged(field)
+    ) {
+      e.preventDefault();
+      e.stopPropagation();
+      handleIconClick(field);
+    }
+  };
+
+  const handleWrapperClick = (
+    e: React.MouseEvent<HTMLDivElement>,
+    field: 'name' | 'email' | 'password'
+  ) => {
+    const target = e.target as HTMLElement;
+    const wrapper = e.currentTarget;
+    const input = wrapper.querySelector('input') as HTMLInputElement;
+
+    if (!input) return;
+
+    const isInputClick = target === input || input.contains(target);
+    const isSvgClick = target.closest('svg') !== null;
+    const isButtonClick = target.closest('button') !== null;
+    const isIconAreaClick = !isInputClick && (isSvgClick || isButtonClick);
+
+    const inputRect = input.getBoundingClientRect();
+    const clickX = e.clientX;
+    const isClickInRightArea = clickX > inputRect.right - 50;
+
+    if (!editingFields[field] && !isIconAreaClick && !isClickInRightArea) {
+      handleInputFocus(field);
+    }
   };
 
   return (
@@ -36,7 +100,11 @@ export const ProfileUI: FC<ProfileUIProps> = ({
         onSubmit={handleSubmit}
       >
         <>
-          <div className={clsx('pb-6', styles.inputWrapper)}>
+          <div
+            className={clsx('pb-6', styles.inputWrapper)}
+            onClick={(e) => handleWrapperClick(e, 'name')}
+            onMouseDown={(e) => handleWrapperMouseDown(e, 'name')}
+          >
             <Input
               type={'text'}
               placeholder={'Имя'}
@@ -46,12 +114,17 @@ export const ProfileUI: FC<ProfileUIProps> = ({
               error={false}
               errorText={''}
               size={'default'}
-              icon={editingFields.name ? 'CloseIcon' : 'EditIcon'}
+              icon={getIcon('name')}
               readOnly={!editingFields.name}
-              onIconClick={() => handleIconClick('name')}
+              onFocus={() => handleInputFocus('name')}
+              onBlur={() => handleInputBlur('name')}
             />
           </div>
-          <div className={clsx('pb-6', styles.inputWrapper)}>
+          <div
+            className={clsx('pb-6', styles.inputWrapper)}
+            onClick={(e) => handleWrapperClick(e, 'email')}
+            onMouseDown={(e) => handleWrapperMouseDown(e, 'email')}
+          >
             <Input
               type={'email'}
               placeholder={'E-mail'}
@@ -61,12 +134,17 @@ export const ProfileUI: FC<ProfileUIProps> = ({
               error={false}
               errorText={''}
               size={'default'}
-              icon={editingFields.email ? 'CloseIcon' : 'EditIcon'}
+              icon={getIcon('email')}
               readOnly={!editingFields.email}
-              onIconClick={() => handleIconClick('email')}
+              onFocus={() => handleInputFocus('email')}
+              onBlur={() => handleInputBlur('email')}
             />
           </div>
-          <div className={clsx('pb-6', styles.inputWrapper)}>
+          <div
+            className={clsx('pb-6', styles.inputWrapper)}
+            onClick={(e) => handleWrapperClick(e, 'password')}
+            onMouseDown={(e) => handleWrapperMouseDown(e, 'password')}
+          >
             <Input
               type={editingFields.password ? 'password' : 'text'}
               placeholder={'Пароль'}
@@ -76,9 +154,10 @@ export const ProfileUI: FC<ProfileUIProps> = ({
               error={false}
               errorText={''}
               size={'default'}
-              icon={editingFields.password ? 'CloseIcon' : 'EditIcon'}
+              icon={getIcon('password')}
               readOnly={!editingFields.password}
-              onIconClick={() => handleIconClick('password')}
+              onFocus={() => handleInputFocus('password')}
+              onBlur={() => handleInputBlur('password')}
             />
           </div>
           {isFormChanged && (

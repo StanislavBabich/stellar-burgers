@@ -12,12 +12,22 @@ import { OrderStatus } from '@components';
 
 export const OrderInfoUI: FC<OrderInfoUIProps> = memo(({ orderInfo }) => (
   <div className={styles.wrap}>
+    <span
+      className={clsx(
+        'text',
+        'text_type_digits-default',
+        'pt-10',
+        styles.number
+      )}
+    >
+      #{String(orderInfo.number).padStart(6, '0')}
+    </span>
     <h3
       className={clsx(
         'text',
         'text_type_main-medium',
         'pb-3',
-        'pt-10',
+        'pt-3',
         styles.header
       )}
     >

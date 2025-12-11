@@ -17,5 +17,8 @@ export type ProfileUIProps = {
     password: boolean;
   };
   handleIconClick: (field: 'name' | 'email' | 'password') => void;
+  handleInputFocus: (field: 'name' | 'email' | 'password') => void;
+  handleInputBlur: (field: 'name' | 'email' | 'password') => void;
+  isFieldChanged: (field: 'name' | 'email' | 'password') => boolean;
   userPassword: string;
 };

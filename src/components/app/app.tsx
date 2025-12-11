@@ -5,6 +5,7 @@ import {
   useNavigate,
   useLocation
 } from 'react-router-dom';
+import { useEffect } from 'react';
 import {
   ConstructorPage,
   Feed,
@@ -26,64 +27,48 @@ import '../../index.css';
 import styles from './app.module.css';
 
 import { AppHeader } from '@components';
+import { useDispatch, useSelector } from '../../services/store';
+import { fetchIngredients } from '../../services/slices/ingredientsSlice';
+import { selectIngredientsHasLoaded } from '../../services/selectors/ingredientsSelectors';
 
-const OrderInfoRoute = () => {
-  const navigate = useNavigate();
+const AppRoutes = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const background = location.state?.background;
+  const dispatch = useDispatch();
+  const hasLoadedIngredients = useSelector(selectIngredientsHasLoaded);
 
-  if (location.state?.background) {
-    const handleClose = () => {
-      navigate(location.state.background.pathname || '/feed', {
-        replace: true
-      });
-    };
+  const handleGoBack = () => {
+    navigate(-1);
+  };
 
-    return (
-      <Modal title='' onClose={handleClose}>
-        <OrderInfo />
-      </Modal>
-    );
-  }
+  useEffect(() => {
+    if (!hasLoadedIngredients) {
+      dispatch(fetchIngredients());
+    }
+  }, [dispatch, hasLoadedIngredients]);
 
-  return (
+  const orderInfoPage = (
     <main style={{ padding: '20px' }}>
       <OrderInfo />
     </main>
   );
-};
 
-const IngredientDetailsRoute = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  if (location.state?.background) {
-    const handleClose = () => {
-      navigate(location.state.background.pathname || '/', { replace: true });
-    };
-
-    return (
-      <Modal title='Детали ингредиента' onClose={handleClose} hideCloseButton>
-        <IngredientDetails />
-      </Modal>
-    );
-  }
-
-  return (
+  const ingredientDetailsPage = (
     <main style={{ padding: '20px' }}>
       <IngredientDetails />
     </main>
   );
-};
 
-const App = () => (
-  <BrowserRouter>
+  return (
     <div className={styles.app}>
       <AppHeader />
-      <Routes>
+
+      <Routes location={background || location}>
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/feed' element={<Feed />} />
-        <Route path='/feed/:number' element={<OrderInfoRoute />} />
-        <Route path='/ingredients/:id' element={<IngredientDetailsRoute />} />
+        <Route path='/feed/:number' element={orderInfoPage} />
+        <Route path='/ingredients/:id' element={ingredientDetailsPage} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
@@ -98,11 +83,50 @@ const App = () => (
         />
         <Route
           path='/profile/orders/:number'
-          element={<ProtectedRoute element={<OrderInfoRoute />} />}
+          element={<ProtectedRoute element={orderInfoPage} />}
         />
         <Route path='*' element={<NotFound404 />} />
       </Routes>
+
+      {background && (
+        <Routes>
+          <Route
+            path='/feed/:number'
+            element={
+              <Modal title='' onClose={handleGoBack}>
+                <OrderInfo />
+              </Modal>
+            }
+          />
+          <Route
+            path='/ingredients/:id'
+            element={
+              <Modal title='Детали ингредиента' onClose={handleGoBack}>
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path='/profile/orders/:number'
+            element={
+              <ProtectedRoute
+                element={
+                  <Modal title='' onClose={handleGoBack}>
+                    <OrderInfo />
+                  </Modal>
+                }
+              />
+            }
+          />
+        </Routes>
+      )}
     </div>
+  );
+};
+
+const App = () => (
+  <BrowserRouter>
+    <AppRoutes />
   </BrowserRouter>
 );
 
