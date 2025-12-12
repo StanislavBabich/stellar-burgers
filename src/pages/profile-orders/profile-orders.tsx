@@ -3,25 +3,14 @@ import { TOrder } from '@utils-types';
 import { FC, useEffect, useState, useRef, useCallback } from 'react';
 import { getOrdersApi } from '@api';
 import { Preloader } from '@ui';
-import { useDispatch, useSelector } from '../../services/store';
-import { fetchIngredients } from '@slices';
-import { selectIngredientsHasLoaded } from '@selectors';
 import { getCookie } from '../../utils/cookie';
 
 const URL = process.env.BURGER_API_URL || '';
 
 export const ProfileOrders: FC = () => {
-  const dispatch = useDispatch();
-  const hasLoaded = useSelector(selectIngredientsHasLoaded);
   const [orders, setOrders] = useState<TOrder[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const wsRef = useRef<WebSocket | null>(null);
-
-  useEffect(() => {
-    if (!hasLoaded) {
-      dispatch(fetchIngredients());
-    }
-  }, [dispatch, hasLoaded]);
 
   const handleGetOrders = useCallback(() => {
     setIsLoading(true);

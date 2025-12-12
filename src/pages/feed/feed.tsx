@@ -3,15 +3,10 @@ import { FeedUI } from '@ui-pages';
 import { TOrder, TOrdersData } from '@utils-types';
 import { FC, useEffect, useState, useRef, useCallback } from 'react';
 import { getFeedsApi } from '@api';
-import { useDispatch, useSelector } from '../../services/store';
-import { fetchIngredients } from '@slices';
-import { selectIngredientsHasLoaded } from '@selectors';
 
 const URL = process.env.BURGER_API_URL || '';
 
 export const Feed: FC = () => {
-  const dispatch = useDispatch();
-  const hasLoaded = useSelector(selectIngredientsHasLoaded);
   const [orders, setOrders] = useState<TOrder[]>([]);
   const [feedData, setFeedData] = useState<TOrdersData>({
     orders: [],
@@ -20,12 +15,6 @@ export const Feed: FC = () => {
   });
   const [isLoading, setIsLoading] = useState(true);
   const wsRef = useRef<WebSocket | null>(null);
-
-  useEffect(() => {
-    if (!hasLoaded) {
-      dispatch(fetchIngredients());
-    }
-  }, [dispatch, hasLoaded]);
 
   const handleGetFeeds = useCallback(() => {
     setIsLoading(true);
