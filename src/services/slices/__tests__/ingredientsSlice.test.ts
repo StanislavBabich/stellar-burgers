@@ -1,4 +1,3 @@
-// Мокаем API функцию ПЕРЕД импортом thunk
 jest.mock('@api', () => ({
   getIngredientsApi: jest.fn()
 }));
@@ -149,11 +148,16 @@ describe('ingredientsSlice reducer', () => {
     });
 
     it('должен вызвать getIngredientsApi и вернуть данные', async () => {
-      const mockGetIngredientsApi = getIngredientsApi as jest.MockedFunction<typeof getIngredientsApi>;
+      const mockGetIngredientsApi = getIngredientsApi as jest.MockedFunction<
+        typeof getIngredientsApi
+      >;
       mockGetIngredientsApi.mockResolvedValue(mockIngredients);
 
       const dispatch = jest.fn();
-      const getState = jest.fn(() => ({ ingredients: initialState, constructor: { bun: null, ingredients: [] } }));
+      const getState = jest.fn(() => ({
+        ingredients: initialState,
+        constructor: { bun: null, ingredients: [] }
+      }));
 
       const thunk = fetchIngredients();
       const result = await thunk(dispatch, getState, undefined);
