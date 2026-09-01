@@ -19,17 +19,13 @@ export const OrderDetailsUI: React.FC<OrderDetailsUIProps> = ({
     >
       {orderNumber}
     </h2>
-    <p className='text text_type_main-medium'>идентификатор заказа</p>
-    <img
-      className={styles.img}
-      src={doneImg}
-      alt='изображение статуса заказа.'
-    />
+    <p className='text text_type_main-medium'>order ID</p>
+    <img className={styles.img} src={doneImg} alt='Order status image' />
     <p className='text text_type_main-default mb-1'>
-      Ваш заказ начали готовить
+      We started cooking your order
     </p>
     <p className={clsx(styles.text, 'text', 'text_type_main-default')}>
-      Дождитесь готовности на орбитальной станции
+      Wait for it at the orbital station
     </p>
   </>
 );

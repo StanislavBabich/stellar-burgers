@@ -52,9 +52,15 @@ module.exports = {
       extensions: ['.js', '.jsx', '.ts', '.tsx']
     }),
     new HtmlWebpackPlugin({
-      template: './public/index.html'
+      template: './public/index.html',
+      favicon: './public/favicon.ico'
     }),
-    new Dotenv()
+    new Dotenv({
+      path: './.env',
+      defaults: './.env.example',
+      systemvars: true,
+      silent: true
+    })
   ],
   resolve: {
     extensions: [
@@ -83,7 +89,8 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, './dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    publicPath: '/'
   },
   devServer: {
     static: path.join(__dirname, './dist'),

@@ -1,5 +1,11 @@
 import { setCookie, getCookie } from './cookie';
-import { TIngredient, TOrder, TOrdersData, TUser } from './types';
+import { TIngredient, TOrder, TUser } from './types';
+import {
+  translateIngredient,
+  translateOrder,
+  translateOrderName,
+  translateOrders
+} from './translate';
 
 const URL = process.env.BURGER_API_URL;
 
@@ -75,7 +81,7 @@ export const getIngredientsApi = () =>
   fetch(`${URL}/ingredients`)
     .then((res) => checkResponse<TIngredientsResponse>(res))
     .then((data) => {
-      if (data?.success) return data.data;
+      if (data?.success) return data.data.map(translateIngredient);
       return Promise.reject(data);
     });
 
@@ -83,7 +89,8 @@ export const getFeedsApi = () =>
   fetch(`${URL}/orders/all`)
     .then((res) => checkResponse<TFeedsResponse>(res))
     .then((data) => {
-      if (data?.success) return data;
+      if (data?.success)
+        return { ...data, orders: translateOrders(data.orders) };
       return Promise.reject(data);
     });
 
@@ -95,7 +102,7 @@ export const getOrdersApi = () =>
       authorization: getCookie('accessToken')
     } as HeadersInit
   }).then((data) => {
-    if (data?.success) return data.orders;
+    if (data?.success) return translateOrders(data.orders);
     return Promise.reject(data);
   });
 
@@ -115,7 +122,12 @@ export const orderBurgerApi = (data: string[]) =>
       ingredients: data
     })
   }).then((data) => {
-    if (data?.success) return data;
+    if (data?.success)
+      return {
+        ...data,
+        name: translateOrderName(data.name),
+        order: translateOrder(data.order)
+      };
     return Promise.reject(data);
   });
 
@@ -129,7 +141,11 @@ export const getOrderByNumberApi = (number: number) =>
     headers: {
       'Content-Type': 'application/json'
     }
-  }).then((res) => checkResponse<TOrderResponse>(res));
+  })
+    .then((res) => checkResponse<TOrderResponse>(res))
+    .then((data) =>
+      data?.orders ? { ...data, orders: translateOrders(data.orders) } : data
+    );
 
 export type TRegisterData = {
   email: string;

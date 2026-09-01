@@ -1,15 +1,13 @@
 import React, { FC, memo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import clsx from 'clsx';
-import {
-  CurrencyIcon,
-  FormattedDate
-} from '@zlden/react-developer-burger-ui-components';
+import { CurrencyIcon } from '@zlden/react-developer-burger-ui-components';
 
 import styles from './order-card.module.css';
 
 import { OrderCardUIProps } from './type';
 import { OrderStatus } from '@components';
+import { FormattedDateEn } from '../formatted-date-en/formatted-date-en';
 
 export const OrderCardUI: FC<OrderCardUIProps> = memo(
   ({ orderInfo, maxIngredients, locationState }) => {
@@ -29,7 +27,7 @@ export const OrderCardUI: FC<OrderCardUIProps> = memo(
             #{String(orderInfo.number).padStart(6, '0')}
           </span>
           <span className='text text_type_main-default text_color_inactive'>
-            <FormattedDate date={orderInfo.date} />
+            <FormattedDateEn date={orderInfo.date} />
           </span>
         </div>
         <h4

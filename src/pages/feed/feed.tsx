@@ -3,6 +3,7 @@ import { FeedUI } from '@ui-pages';
 import { TOrder, TOrdersData } from '@utils-types';
 import { FC, useEffect, useState, useRef, useCallback } from 'react';
 import { getFeedsApi } from '@api';
+import { translateOrders } from '../../utils/translate';
 
 const URL = process.env.BURGER_API_URL || '';
 
@@ -21,9 +22,10 @@ export const Feed: FC = () => {
     getFeedsApi()
       .then((data) => {
         if (data.success && data.orders) {
-          setOrders(data.orders);
+          const orders = translateOrders(data.orders);
+          setOrders(orders);
           setFeedData({
-            orders: data.orders,
+            orders,
             total: data.total || 0,
             totalToday: data.totalToday || 0
           });
@@ -54,9 +56,10 @@ export const Feed: FC = () => {
         try {
           const data = JSON.parse(event.data);
           if (data.success && data.orders) {
-            setOrders(data.orders);
+            const orders = translateOrders(data.orders);
+            setOrders(orders);
             setFeedData({
-              orders: data.orders,
+              orders,
               total: data.total || 0,
               totalToday: data.totalToday || 0
             });

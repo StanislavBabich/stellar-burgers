@@ -21,7 +21,7 @@ export const DefaultElement: Story = {
     ingredient: {
       _id: '111',
       id: '222',
-      name: 'Булка',
+      name: 'Bun',
       type: 'top',
       proteins: 12,
       fat: 33,

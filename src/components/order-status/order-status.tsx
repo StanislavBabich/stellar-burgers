@@ -3,11 +3,11 @@ import { OrderStatusProps } from './type';
 import { OrderStatusUI } from '@ui';
 
 const statusText: { [key: string]: string } = {
-  pending: 'Готовится',
-  done: 'Выполнен',
-  created: 'Создан',
-  cancelled: 'Отменён',
-  canceled: 'Отменён'
+  pending: 'Cooking',
+  done: 'Done',
+  created: 'Created',
+  cancelled: 'Cancelled',
+  canceled: 'Cancelled'
 };
 
 export const OrderStatus: FC<OrderStatusProps> = ({ status }) => {
@@ -27,7 +27,7 @@ export const OrderStatus: FC<OrderStatusProps> = ({ status }) => {
 
   const textStyle = getTextStyle();
   const displayText =
-    statusText[status] || statusText[status.toLowerCase()] || 'Создан';
+    statusText[status] || statusText[status.toLowerCase()] || 'Created';
 
   return <OrderStatusUI textStyle={textStyle} text={displayText} />;
 };

@@ -25,7 +25,7 @@ export const ConstructorPageUI: FC<ConstructorPageUIProps> = ({
             'pl-5'
           )}
         >
-          Соберите бургер
+          Assemble the burger
         </h1>
         <div className={clsx(styles.main, 'pl-5', 'pr-5')}>
           <BurgerIngredients />

@@ -21,7 +21,7 @@ export const DefaultOrderCard: Story = {
       ingredientsInfo: [
         {
           _id: '111',
-          name: 'Булка',
+          name: 'Bun',
           type: 'top',
           proteins: 12,
           fat: 33,
@@ -36,7 +36,7 @@ export const DefaultOrderCard: Story = {
       ingredientsToShow: [
         {
           _id: '111',
-          name: 'Булка',
+          name: 'Bun',
           type: 'top',
           proteins: 12,
           fat: 33,
@@ -49,7 +49,7 @@ export const DefaultOrderCard: Story = {
         },
         {
           _id: '111',
-          name: 'Начинка',
+          name: 'Filling',
           type: 'top',
           proteins: 12,
           fat: 33,
@@ -66,11 +66,11 @@ export const DefaultOrderCard: Story = {
       date: new Date('2024-01-25'),
       _id: '32',
       status: 'ready',
-      name: 'Начинка',
+      name: 'Filling',
       createdAt: '',
       updatedAt: '',
       number: 3,
-      ingredients: ['Булка', 'Начинка']
+      ingredients: ['Bun', 'Filling']
     },
     maxIngredients: 5,
     locationState: {

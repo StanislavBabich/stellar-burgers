@@ -38,7 +38,7 @@ export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => {
             end
           >
             <BurgerIcon type={'primary'} />
-            <span className='ml-2'>Конструктор</span>
+            <span className='ml-2'>Constructor</span>
           </NavLink>
           <NavLink
             to='/feed'
@@ -53,7 +53,7 @@ export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => {
             }
           >
             <ListIcon type={'primary'} />
-            <span className='ml-2'>Лента заказов</span>
+            <span className='ml-2'>Order feed</span>
           </NavLink>
         </div>
         <div className={styles.logo}>
@@ -75,7 +75,7 @@ export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => {
             }
           >
             <ProfileIcon type={'primary'} />
-            <span className='ml-2'>{userName || 'Личный кабинет'}</span>
+            <span className='ml-2'>{userName || 'Account'}</span>
           </NavLink>
         </div>
       </nav>

@@ -31,7 +31,7 @@ export const IngredientDetails: FC = () => {
   return (
     <section className={styles.page}>
       <h1 className={clsx(styles.pageTitle, 'text', 'text_type_main-large')}>
-        Детали ингредиента
+        Ingredient details
       </h1>
       {content}
     </section>

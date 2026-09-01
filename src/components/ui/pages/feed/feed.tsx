@@ -12,10 +12,10 @@ export const FeedUI: FC<FeedUIProps> = memo(
     <main className={styles.containerMain}>
       <div className={clsx(styles.titleBox, 'mt-10', 'mb-5')}>
         <h1 className={clsx(styles.title, 'text', 'text_type_main-large')}>
-          Лента заказов
+          Order feed
         </h1>
         <RefreshButton
-          text='Обновить'
+          text='Refresh'
           onClick={handleGetFeeds}
           extraClass={'ml-30'}
         />

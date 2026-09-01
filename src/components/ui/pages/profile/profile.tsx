@@ -107,7 +107,7 @@ export const ProfileUI: FC<ProfileUIProps> = ({
           >
             <Input
               type={'text'}
-              placeholder={'Имя'}
+              placeholder={'Name'}
               onChange={handleInputChange}
               value={formValue.name}
               name={'name'}
@@ -147,7 +147,7 @@ export const ProfileUI: FC<ProfileUIProps> = ({
           >
             <Input
               type={editingFields.password ? 'password' : 'text'}
-              placeholder={'Пароль'}
+              placeholder={'Password'}
               onChange={handleInputChange}
               value={getPasswordDisplayValue()}
               name={'password'}
@@ -168,10 +168,10 @@ export const ProfileUI: FC<ProfileUIProps> = ({
                 size='medium'
                 onClick={handleCancel}
               >
-                Отменить
+                Cancel
               </Button>
               <Button type='primary' size='medium' htmlType='submit'>
-                Сохранить
+                Save
               </Button>
             </div>
           )}

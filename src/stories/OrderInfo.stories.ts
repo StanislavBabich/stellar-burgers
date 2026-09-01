@@ -21,7 +21,7 @@ export const DefaultOrderInfo: Story = {
       ingredientsInfo: {
         bun: {
           _id: '211',
-          name: 'Булка',
+          name: 'Bun',
           type: 'bun',
           proteins: 12,
           fat: 23,
@@ -42,7 +42,7 @@ export const DefaultOrderInfo: Story = {
       createdAt: '',
       updatedAt: '',
       number: 2,
-      ingredients: ['Булка', 'Начинка']
+      ingredients: ['Bun', 'Filling']
     }
   }
 };

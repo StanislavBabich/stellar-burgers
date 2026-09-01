@@ -19,7 +19,7 @@ export const ResetPasswordUI: FC<ResetPasswordUIProps> = ({
 }) => (
   <main className={styles.container}>
     <div className={clsx('pt-6', styles.wrapCenter)}>
-      <h3 className='pb-6 text text_type_main-medium'>Восстановление пароля</h3>
+      <h3 className='pb-6 text text_type_main-medium'>Password recovery</h3>
       <form
         className={clsx('pb-15', styles.form)}
         name='login'
@@ -30,12 +30,14 @@ export const ResetPasswordUI: FC<ResetPasswordUIProps> = ({
             onChange={(e) => setPassword(e.target.value)}
             value={password}
             name='password'
+            placeholder='Password'
+            errorText='Invalid password'
           />
         </div>
         <div className='pb-6'>
           <Input
             type='text'
-            placeholder='Введите код из письма'
+            placeholder='Enter the code from the email'
             onChange={(e) => setToken(e.target.value)}
             value={token}
             name='token'
@@ -46,7 +48,7 @@ export const ResetPasswordUI: FC<ResetPasswordUIProps> = ({
         </div>
         <div className={clsx('pb-6', styles.button)}>
           <Button type='primary' size='medium' htmlType='submit'>
-            Сохранить
+            Save
           </Button>
         </div>
         {errorText && (
@@ -70,9 +72,9 @@ export const ResetPasswordUI: FC<ResetPasswordUIProps> = ({
           'pb-6'
         )}
       >
-        Вспомнили пароль?
+        Remembered your password?
         <Link to='/login' className={clsx('pl-2', styles.link)}>
-          Войти
+          Sign in
         </Link>
       </div>
     </div>

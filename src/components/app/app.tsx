@@ -101,7 +101,7 @@ const AppRoutes = () => {
           <Route
             path='/ingredients/:id'
             element={
-              <Modal title='Детали ингредиента' onClose={handleGoBack}>
+              <Modal title='Ingredient details' onClose={handleGoBack}>
                 <IngredientDetails />
               </Modal>
             }

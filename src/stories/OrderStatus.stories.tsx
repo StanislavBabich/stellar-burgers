@@ -26,6 +26,6 @@ type Story = StoryObj<typeof meta>;
 export const DefaultOrderStatus: Story = {
   args: {
     textStyle: '#E52B1A',
-    text: 'Готовится'
+    text: 'Cooking'
   }
 };

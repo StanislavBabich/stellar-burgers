@@ -30,7 +30,7 @@ export const Register: FC = () => {
         }
       })
       .catch((err) => {
-        let errorMessage = 'Ошибка регистрации';
+        let errorMessage = 'Registration failed';
         if (err?.message) {
           errorMessage = err.message;
         } else if (typeof err === 'string') {

@@ -1,19 +1,34 @@
-# Проектная работа 11-го спринта
+# Stellar Burgers
 
-[Макет](<https://www.figma.com/file/vIywAvqfkOIRWGOkfOnReY/React-Fullstack_-Проектные-задачи-(3-месяца)_external_link?type=design&node-id=0-1&mode=design>)
+A React SPA for assembling custom burgers: constructor, live order feed, and a personal account with order history.
 
-[Чеклист](https://www.notion.so/praktikum/0527c10b723d4873aa75686bad54b32e?pvs=4)
+## Tech stack
 
-## Этапы работы:
+- React 18 + TypeScript
+- Redux Toolkit
+- React Router v6
+- Webpack 5
 
-1. Разверните проект и ознакомьтесь с кодом. Все необходимые вам компоненты уже созданы и лежат в папке `src/components`
+## Getting started
 
-2. Настройте роутинг.
+1. Copy `.env.example` to `.env`
+2. Install dependencies: `npm install`
+3. Start the dev server: `npm start` → [http://localhost:4000](http://localhost:4000)
 
-3. Напишите функционал запросов данных с сервера, используя `Redux` и глобальный `store`. Сами "ручки" уже прописаны и лежат в `utils/burger-api.ts`
+API requests need the `BURGER_API_URL` environment variable. The value is in `.env.example`.
 
-4. Настройте авторизацию и создайте защищённые роуты.
+## Scripts
 
-## Важно:
+- `npm start` — development server
+- `npm run build` — production build to `dist/`
+- `npm run lint` — ESLint
+- `npm run storybook` — Storybook
 
-Для корректной работы запросов к серверу необходимо добавить переменную BURGER_API_URL в окружение. Сама ссылка находится в файле `.env.example`.
+## Deploying to Vercel
+
+1. Push the repository to GitHub.
+2. Import the project at [vercel.com/new](https://vercel.com/new).
+3. Keep **Framework Preset** as Other (this is a custom Webpack SPA, not Next.js).
+4. Set **Build Command** to `npm run build` and **Output Directory** to `dist` (`vercel.json` already defines both).
+5. Add the environment variable `BURGER_API_URL` = `https://norma.education-services.ru/api` (Production, Preview, and Development).
+6. Deploy. Direct links like `/feed` and `/profile` work because SPA rewrites send all routes to `index.html`.

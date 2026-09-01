@@ -19,7 +19,7 @@ export const DefaultIngredientDetails: Story = {
   args: {
     ingredientData: {
       _id: '111',
-      name: 'Начинка',
+      name: 'Filling',
       type: 'main',
       proteins: 23,
       fat: 34,

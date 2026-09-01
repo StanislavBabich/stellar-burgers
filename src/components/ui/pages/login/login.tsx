@@ -19,7 +19,7 @@ export const LoginUI: FC<LoginUIProps> = ({
 }) => (
   <main className={styles.container}>
     <div className={clsx('pt-6', styles.wrapCenter)}>
-      <h3 className='pb-6 text text_type_main-medium'>Вход</h3>
+      <h3 className='pb-6 text text_type_main-medium'>Sign in</h3>
       <form
         className={clsx('pb-15', styles.form)}
         name='login'
@@ -43,11 +43,13 @@ export const LoginUI: FC<LoginUIProps> = ({
               onChange={(e) => setPassword(e.target.value)}
               value={password}
               name='password'
+              placeholder='Password'
+              errorText='Invalid password'
             />
           </div>
           <div className={clsx('pb-6', styles.button)}>
             <Button type='primary' size='medium' htmlType='submit'>
-              Войти
+              Sign in
             </Button>
           </div>
           {errorText && (
@@ -72,9 +74,9 @@ export const LoginUI: FC<LoginUIProps> = ({
           'text_type_main-default'
         )}
       >
-        Вы - новый пользователь?
+        New user?
         <Link to='/register' className={clsx('pl-2', styles.link)}>
-          Зарегистрироваться
+          Sign up
         </Link>
       </div>
       <div
@@ -85,9 +87,9 @@ export const LoginUI: FC<LoginUIProps> = ({
           'pb-6'
         )}
       >
-        Забыли пароль?
+        Forgot your password?
         <Link to={'/forgot-password'} className={clsx('pl-2', styles.link)}>
-          Восстановить пароль
+          Recover password
         </Link>
       </div>
     </div>

@@ -100,7 +100,7 @@ export const Profile: FC = () => {
           err?.message ||
           err?.error ||
           err?.data?.message ||
-          'Ошибка обновления данных';
+          'Failed to update profile';
         setUpdateUserError(errorMessage);
       });
   };

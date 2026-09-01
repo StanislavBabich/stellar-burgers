@@ -4,6 +4,7 @@ import { FC, useEffect, useState, useRef, useCallback } from 'react';
 import { getOrdersApi } from '@api';
 import { Preloader } from '@ui';
 import { getCookie } from '../../utils/cookie';
+import { translateOrders } from '../../utils/translate';
 
 const URL = process.env.BURGER_API_URL || '';
 
@@ -17,7 +18,7 @@ export const ProfileOrders: FC = () => {
     getOrdersApi()
       .then((data) => {
         if (Array.isArray(data)) {
-          setOrders(data);
+          setOrders(translateOrders(data));
         }
       })
       .catch(() => {})
@@ -51,7 +52,7 @@ export const ProfileOrders: FC = () => {
         try {
           const data = JSON.parse(event.data);
           if (data.success && data.orders) {
-            setOrders(data.orders);
+            setOrders(translateOrders(data.orders));
           }
         } catch (err) {}
       };
